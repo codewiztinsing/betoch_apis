@@ -17,16 +17,16 @@ class Order(models.Model):
         null = True,
         on_delete = models.CASCADE,
         )
-    name        = models.CharField(max_length=100)
+    name        = models.CharField(max_length=100,null = False)
     # last_name   = models.CharField(max_length=100)
-    email       = models.CharField(max_length=100)
+    email       = models.CharField(max_length=100,null = False)
     address     = models.CharField(max_length=100,null = True)
     # zipcode     = models.CharField(max_length=100)
-    place       = models.CharField(max_length=100)
-    phone       = models.CharField(max_length=100)
+    place       = models.CharField(max_length=100,null = False)
+    phone       = models.CharField(max_length=100,null = False)
     created_at  = models.DateTimeField(auto_now_add=True)
     status      = models.CharField(max_length = 10,choices = OrderStatus.choices,default = OrderStatus.UNPAID)
-    # paid_amount = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    price       = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     # stripe_token = models.CharField(max_length=100)
 
     class Meta:

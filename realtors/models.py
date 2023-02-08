@@ -9,7 +9,7 @@ class Realtor(models.Model):
 	email       = models.EmailField(unique = True)
 	phone       = models.CharField(max_length = 10)
 	top_seller  = models.BooleanField(default = False)
-	date_hired  = models.DateTimeField(default = datetime.now)
+	created_at  = models.DateTimeField(default = datetime.now)
 
 
 	def __str__(self):

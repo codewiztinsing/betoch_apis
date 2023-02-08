@@ -6,8 +6,11 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework import permissions
 from .models import Listing
+from realtors.models import Realtor
 from .serializers import ListingSerializer,ListingDetailSerializer
 from rest_framework.routers import DefaultRouter
+from django.shortcuts import render,redirect
+from django.contrib.postgres.search import SearchVector
 
 
 class ListingsView(ListAPIView):
@@ -21,32 +24,17 @@ class ListingViewSet(viewsets.ModelViewSet):
 
     queryset = Listing.objects.all()
     serializer_class = ListingSerializer
+    pagination_class = None
    
 
 router = DefaultRouter()
 router.register(r'', ListingViewSet,basename="listings")
-# class ListingCreateView(APIView):
-
-# 	def post(self,request,format = None):
-# 		ls_data = ListingSerializer(data = self.request.data)
-# 		if ls_data.is_valid():
-# 			ls_data.save()
-# 			return Response(ls_data.data,status.HTTP_200_OK)
-
-# 		return Response({'message':"listing creation"},status.HTTP_400_BAD_REQUEST)
-
 
 
 class ListingCreateView(CreateAPIView):
 	queryset = Listing.objects.all()
 	serializer_class = ListingSerializer
 	
-	
-
-
-
-
-
 
 
 class ListingView(ListAPIView):
@@ -90,13 +78,22 @@ class SearchView(APIView):
 		return Response(serialize.data) 
 		
 
-
-
-
-
-
-
-
+class FullTextSearch(APIView):
+	def post(self,request,format = None):
+		
+		permissions_classes = (permissions.AllowAny,)
+		data   =  self.request.data
+		keyword = data['keyword']
+		queryset = Listing.objects.annotate(search=SearchVector(
+			'title', 
+			'description',
+			'price',
+			'city',
+			'home_type',
+			'sale_type')).filter(search=keyword)
+		serialize = ListingSerializer(queryset,many = True)
+		return Response(serialize.data) 
+		
 
 class RelatedSearchView(APIView):
 
@@ -114,19 +111,64 @@ class RelatedSearchView(APIView):
 		price = data['price']
 		q1 = Listing.objects.filter(home_type__contains = home_type)
 		q2 = Listing.objects.filter(city__contains = city)
-		q13 = Listing.objects.filter(price__l = price)
-
-
-		
-
-		# city = data['city']  
-		# queryset = queryset.filter(city__iexact = city)  
+		q13 = Listing.objects.filter(price__lt = price)
 
 		serialize = ListingSerializer(queryset,many = True)
-		return Response(serialize.data) 
+		return Response(serialize.data)
+
+
+
+class AddandRetrieveFavoriteView(APIView):
+
+	def post(self,request,format = None):
+		return Response({"message":"add to favorite"})  
+
+	def list(self,request,format = None):
+		return Response({"message":"list of favorites"}) 
+
+	def delete(self,request,format = None):
+		return Response({"message":"remove from favorite"}) 
 		
 
 
 
+class MYListing(APIView):
+
+	def post(self,request,format = None):
+		permissions_classes = (permissions.AllowAny,)
+		queryset = Listing.objects.all()
+		data   =  self.request.data
+		realtor = Realtor.objects.get(email = data['email'])
+		queryset = queryset.filter(realtor = realtor)
+		serialize = ListingDetailSerializer(queryset,many = True)
+		return Response(serialize.data)
 
 
+def useraddlisting(request):
+	from .forms import ListingForm
+	form = ListingForm()
+
+	if request.method == "POST":
+		form = ListingForm(request.POST or None,request.FILES or None)
+		if form.is_valid():
+			form.save()
+			return redirect("listing:mylistings")
+			
+
+	return render(request,'listing/index.html',{'form':form})
+
+
+
+
+
+def mylistings(request):
+	realtor = Realtor.objects.get(email = request.user.email)
+	listings = Listing.objects.all().filter(realtor = realtor)
+	return render(request,"listing/mylistings.html",{"listings":listings})
+
+
+
+
+
+
+ 

@@ -13,5 +13,7 @@ class OrderAdmin(admin.ModelAdmin):
         
         )
 
+    list_display_links = ('name','id','email')
+
 
 admin.site.register(OrderItem)

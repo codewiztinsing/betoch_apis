@@ -27,6 +27,7 @@ class ListingSerializer(serializers.ModelSerializer):
             'price',
             'get_image',
             'images',
+            'image',
             'date_added',
             ]
 
@@ -37,5 +38,29 @@ class ListingSerializer(serializers.ModelSerializer):
 class ListingDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Listing
-        fields = '__all__'
+        fields = fields = [
+            'id',
+            'title',
+            'city',
+            'slug',
+            'address',
+            'state',
+            'published',
+            'home_type',
+            'sale_type',
+            'bed_rooms',
+            'bath_rooms',
+            'sqrt',
+            'ratings',
+            'avgRating',
+            'oldPrice',
+            'slug',
+            'published',
+            'description',
+            'price',
+            'get_image',
+            'images',
+            'image',
+            'date_added',
+            ]
         lookup_field = 'slug'

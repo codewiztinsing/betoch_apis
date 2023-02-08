@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{%block content %}
+<div class="row">
+  <div class="col-75">
+    <div class="container" style="justify-content: center;align-items: center;">
+       <h1>{{order.name}}</h1>
+      <img src="http://10.0.3.2:8000{{order.listing.image.url}}/" alt="{{order.name}}" class="img-flu" />
+     
+      <div class="discription">
+        
+        <p>price {{order.price}}ETB</p>
+        <p>city {{order.listing.city}}</p>
+        <p>bedrooms {{order.listing.bed_rooms}}</p>
+        <p>bathrooms {{order.listing.bath_rooms}}</p>
+
+        <p>price {{order.price}}ETB</p>
+        <p>city {{order.listing.city}}</p>
+        <p>bedrooms {{order.listing.bed_rooms}}</p>
+      </div>
+      <form action="https://test.yenepay.com" method="POST" class="form">
+  {%csrf_token%}
+  {%for x,y in obj.items%}
+    <input type="hidden" name="{{x}}" value="{{y}}">
+  {%endfor%}
+ 
+  <input type="submit" name="" value="pay" class="btn btn-primary form-control">
+    </div>
+  </div>
+
+ 
+</div>
+</form>
+{%endblock content%}

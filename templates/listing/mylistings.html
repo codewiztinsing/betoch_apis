@@ -1,0 +1,18 @@
+{% extends 'base.html'%}
+
+{%load static %}
+{% block title%}mylisting page{%endblock%}
+{% block style%}
+<link rel="stylesheet" type="text/css" href="{% static 'listings/css/index.css' %}">
+
+{%endblock%}
+{% block content %} 
+	<h1>hello block content</h1>
+	 <div class="display-listings">
+	 	{%for listing in listings%}
+		{{ listing.title }}
+		{{listing.published}}
+	{%endfor%}
+
+	 </div>
+{%endblock%}

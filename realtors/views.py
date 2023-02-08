@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView,RetrieveAPIView
+from rest_framework.generics import ListAPIView,RetrieveAPIView,ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework import permissions
 from .models import Realtor
@@ -24,6 +24,12 @@ class RealtorView(RetrieveAPIView):
 		# print(instance.realtor_orders.all())
 		serializer = self.get_serializer(instance)
 		return Response(serializer.data)
+
+class RealtorCreateView(ListCreateAPIView):
+	queryset = Realtor.objects.all()
+	serializer_class = RealtorSerilizer
+	
+	
 	
 
 

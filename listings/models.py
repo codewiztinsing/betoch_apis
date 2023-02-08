@@ -5,6 +5,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
 from realtors.models import Realtor
+from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 
 class Listing(models.Model):
@@ -34,7 +36,7 @@ class Listing(models.Model):
     bath_rooms    = models.IntegerField(default = 0)
     sqrt          = models.DecimalField(max_digits = 4,decimal_places = 2,default = 10.00)
     home_type     = models.CharField(max_length = 10,choices = HomeType.choices,default = HomeType.CONDO)
-    description   = models.TextField(blank=True, null=True)
+    description   = RichTextField(null = True)
     avgRating     = models.IntegerField(default=1)
     ratings       = models.IntegerField(default=1)
     oldPrice      = models.DecimalField(max_digits=6, decimal_places=2,default=144)
