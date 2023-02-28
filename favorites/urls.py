@@ -1,7 +1,9 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+
 from .views import (
-          FavoriteViewSet
+          FavoriteViewSet,
+          FavoriteListView,FavoriteListView
             
             )
 
@@ -12,6 +14,7 @@ router.register(r'', FavoriteViewSet,basename="favs")
 
 
 urlpatterns = [
+  path('myfav/',FavoriteListView.as_view(),name = 'myfav')
     
 ]
 

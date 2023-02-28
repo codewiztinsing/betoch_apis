@@ -9,11 +9,11 @@ User = get_user_model()
 class SignUpView(APIView):
 
 	def post(self,request,format = None):
-		data = self.request.data
-		name = data['username']
-		email = data['email']
-		password = data['password']
-		password2 = data['password2']
+		data       = self.request.data
+		name       = data['username']
+		email      = data['email']
+		password   = data['password']
+		password2  = data['password2']
 		is_realtor = data['is_realtor']
 
 		if password == password2:

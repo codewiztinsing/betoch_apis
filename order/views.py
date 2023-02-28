@@ -22,8 +22,6 @@ router.register(r'', OrderViewSet,basename="orders")
 
 
 class OrderViewCreate(APIView):
-    # queryset = Order.objects.all()
-    # serializer_class = OrderSerializer
 
     def post(self,request,format = None):
 
@@ -45,11 +43,10 @@ class OrderViewRetrieve(RetrieveAPIView):
 
 
 
-class OrderItemViewSet(viewsets.ModelViewSet):
-
-    queryset = OrderItem.objects.all()
-    serializer_class = OrderItemSerializer
-
-      
+class OrderListWithEmail(APIView):
+    def post(self,request,format = None):
+        orders = Order.objects.filter(email = self.request.data['emial'])
+        orders = OrderSerializer(orders,many = True)
+        return Response(orders.data)
 
  

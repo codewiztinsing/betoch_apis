@@ -72,7 +72,8 @@ INSTALLED_APPS = [
     'realtors',
     'listings',
     'favorites',
-    'subscriber'
+    'subscriber',
+    'ServiceFee'
 ]
 
 MIDDLEWARE = [
@@ -208,11 +209,24 @@ MEDIA_ROOT =  BASE_DIR / 'media'
 AUTH_USER_MODEL = 'accounts.UserAccount'
 
 
+# #For email
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
 # EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+
 # EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'tinsingjobs2k@gmail.com'
+
+# EMAIL_HOST_USER = 'aleludago@gmail.com'
+
+# #Must generate specific password for your app in [gmail settings][1]
 # EMAIL_HOST_PASSWORD = 'TESIha1817!?'
+
+# EMAIL_PORT = 25
+
+# #This did the trick
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -228,4 +242,18 @@ SITE_ID = 1
 ####################################
 
 
+api_key = "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 "
 
+
+
+SENDGRID_API_KEY = api_key #os.getenv('SENDGRID_API_KEY')
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST_USER = 'apikey' #'apikey' # this is exactly the value 'apikey'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
+# EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+# SENDGRID_API_KEY = api_key #os.getenv('SENDGRID_API_KEY')
+# SENDGRID_SANDBOX_MODE_IN_DEBUG = False

@@ -8,6 +8,8 @@ class ListingSerializer(serializers.ModelSerializer):
         model  = Listing
         fields = [
             'id',
+            'realtor',
+            'get_realtor_name',
             'title',
             'city',
             'slug',
@@ -18,8 +20,6 @@ class ListingSerializer(serializers.ModelSerializer):
             'bed_rooms',
             'bath_rooms',
             'sqrt',
-            'ratings',
-            'avgRating',
             'oldPrice',
             'slug',
             'published',
@@ -41,6 +41,7 @@ class ListingDetailSerializer(serializers.ModelSerializer):
         fields = fields = [
             'id',
             'title',
+            'get_realtor_name',
             'city',
             'slug',
             'address',
@@ -51,8 +52,6 @@ class ListingDetailSerializer(serializers.ModelSerializer):
             'bed_rooms',
             'bath_rooms',
             'sqrt',
-            'ratings',
-            'avgRating',
             'oldPrice',
             'slug',
             'published',

@@ -17,8 +17,7 @@ class Order(models.Model):
         null = True,
         on_delete = models.CASCADE,
         )
-    name        = models.CharField(max_length=100,null = False)
-    # last_name   = models.CharField(max_length=100)
+ 
     email       = models.CharField(max_length=100,null = False)
     address     = models.CharField(max_length=100,null = True)
     # zipcode     = models.CharField(max_length=100)
@@ -33,7 +32,7 @@ class Order(models.Model):
         ordering = ['-created_at',]
     
     def __str__(self):
-        return self.name
+        return f"${self.email}"
 
 class OrderItem(models.Model):
     id = models.IntegerField(primary_key = True,default = 10000000)

@@ -10,7 +10,12 @@ from realtors.models import Realtor
 from .serializers import ListingSerializer,ListingDetailSerializer
 from rest_framework.routers import DefaultRouter
 from django.shortcuts import render,redirect
-from django.contrib.postgres.search import SearchVector
+from django.contrib.postgres.search import (
+	SearchVector,
+	SearchQuery, 
+	SearchRank,
+	TrigramSimilarity
+	)
 
 
 class ListingsView(ListAPIView):
@@ -84,13 +89,27 @@ class FullTextSearch(APIView):
 		permissions_classes = (permissions.AllowAny,)
 		data   =  self.request.data
 		keyword = data['keyword']
-		queryset = Listing.objects.annotate(search=SearchVector(
-			'title', 
-			'description',
-			'price',
-			'city',
-			'home_type',
-			'sale_type')).filter(search=keyword)
+		search_query = SearchQuery(keyword)
+
+
+
+		# queryset = Listing.objects.annotate(
+		# similarity=TrigramSimilarity('home_type', search_query),
+		# ).filter(similarity__gt=0.1).order_by('-similarity')
+
+		search_vector = SearchVector('title',weight="A") \
+								+ SearchVector('home_type',weight="B") \
+								+ SearchVector('sale_type',weight="B")\
+								+ SearchVector('price',weight="A")
+
+	
+
+		queryset = Listing.objects.annotate(
+				search=search_vector,
+				rank=SearchRank(search_vector, search_query)
+				).filter(search=search_query).filter(published = True).order_by('-rank')
+		
+
 		serialize = ListingSerializer(queryset,many = True)
 		return Response(serialize.data) 
 		
@@ -143,6 +162,8 @@ class MYListing(APIView):
 		serialize = ListingDetailSerializer(queryset,many = True)
 		return Response(serialize.data)
 
+	
+
 
 def useraddlisting(request):
 	from .forms import ListingForm
@@ -152,7 +173,7 @@ def useraddlisting(request):
 		form = ListingForm(request.POST or None,request.FILES or None)
 		if form.is_valid():
 			form.save()
-			return redirect("listing:mylistings")
+			return redirect("listing:mylisting")
 			
 
 	return render(request,'listing/index.html',{'form':form})
@@ -162,8 +183,11 @@ def useraddlisting(request):
 
 
 def mylistings(request):
-	realtor = Realtor.objects.get(email = request.user.email)
-	listings = Listing.objects.all().filter(realtor = realtor)
+	print(request.GET)
+	realtor = Realtor.objects.get(email = "aleludago@gmail.com")
+	listings = Listing.objects.all().filter(realtor = 11)
+	for listing in listings:
+		print(listing.image.url)
 	return render(request,"listing/mylistings.html",{"listings":listings})
 
 

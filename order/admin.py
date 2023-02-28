@@ -6,14 +6,13 @@ from .models import Order,OrderItem
 class OrderAdmin(admin.ModelAdmin):
     list_display = (
         "id",
-        "name", 
         "email",
         "created_at",
         # "paid_amount",
         
         )
 
-    list_display_links = ('name','id','email')
+    list_display_links = ('id','email')
 
 
 admin.site.register(OrderItem)

@@ -9,7 +9,8 @@ from .views import (
 	useraddlisting,
 	AddandRetrieveFavoriteView,
 	MYListing,
-	FullTextSearch
+	FullTextSearch,
+	mylistings
 
 	)
 
@@ -25,7 +26,8 @@ urlpatterns = [
 	path('related_search/',RelatedSearchView.as_view(),name = 'listing-related'),
 	path('create/',ListingCreateView.as_view(),name = 'listing-create'),
 	path('user-add/',useraddlisting,name = 'user-add'),
-	path('mylistings/',MYListing.as_view(),name = 'mylistings'),
+	# path('mylistings/',MYListing.as_view(),name = 'mylistings'),
+	path('mylistings/',mylistings,name = 'mylisting'),
 	path('<slug>/',ListingView.as_view(),name = 'listing'),
 	
 ]

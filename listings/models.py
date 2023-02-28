@@ -12,8 +12,8 @@ from ckeditor_uploader.fields import RichTextUploadingField
 class Listing(models.Model):
 
     class SaleType(models.TextChoices):
-        FOR_SALE   = 'For Sale'
-        FOR_RENT   = 'For rent'
+        FOR_SALE   = 'Sale'
+        FOR_RENT   = 'Rent'
 
 
     class HomeType(models.TextChoices):
@@ -36,9 +36,8 @@ class Listing(models.Model):
     bath_rooms    = models.IntegerField(default = 0)
     sqrt          = models.DecimalField(max_digits = 4,decimal_places = 2,default = 10.00)
     home_type     = models.CharField(max_length = 10,choices = HomeType.choices,default = HomeType.CONDO)
-    description   = RichTextField(null = True)
-    avgRating     = models.IntegerField(default=1)
-    ratings       = models.IntegerField(default=1)
+    # description   = RichTextField(null = True)
+    description   = models.TextField(null = True)
     oldPrice      = models.DecimalField(max_digits=6, decimal_places=2,default=144)
     image         = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
     image_1       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
@@ -56,12 +55,13 @@ class Listing(models.Model):
 
 
 
-
-
-
-
     def __str__(self):
         return self.title
+
+        
+    @property
+    def get_realtor_name(self):
+        return self.realtor.name
 
     @property
     def images(self):

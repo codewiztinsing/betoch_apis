@@ -5,10 +5,13 @@ from django.dispatch import receiver
 from realtors.models import Realtor
 from listings.models import Listing
 from subscriber.models import Subscriber
+from ServiceFee.models import ServiceFee
 
 @receiver(post_save, sender=Listing)
 def create_profile(sender, instance, created, **kwargs):
     if instance.published:
+        fee = ServiceFee.objects.create(listing = instance,realtor = instance.realtor,fee = float(instance.price) * 0.2)
+        fee.save()
         city = instance.city
         subs = Subscriber.objects.filter(city__contains = city)
         emails = []
@@ -19,7 +22,7 @@ def create_profile(sender, instance, created, **kwargs):
             f"house title {instance.title}\
             house price {instance.price} \
             house location {city} ",
-            'adming@gmail.com',
+            'tinsingjobs2k@gmail.com',
             emails,
             fail_silently=False,
         )

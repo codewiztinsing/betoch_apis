@@ -10,8 +10,9 @@
 	<h1>hello block content</h1>
 	 <div class="display-listings">
 	 	{%for listing in listings%}
-		{{ listing.title }}
-		{{listing.published}}
+	 	  <img src="http://10.0.3.2:8000{{listing.image.url}}" alt="{{listing.title}}" style="width:200;height:200" />
+		<h1>{{ listing.title }}</h1>
+		<br />
 	{%endfor%}
 
 	 </div>
