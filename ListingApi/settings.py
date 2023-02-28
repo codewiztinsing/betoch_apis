@@ -241,19 +241,20 @@ SITE_ID = 1
     ##  CKEDITOR CONFIGURATION ##
 ####################################
 
+# tinsingjobs2k@gmail.com
+# api_key = "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 "
 
-api_key = "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 "
 
+api_key = "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"
 
+# SENDGRID_API_KEY = api_key #os.getenv('SENDGRID_API_KEY')
 
-SENDGRID_API_KEY = api_key #os.getenv('SENDGRID_API_KEY')
-
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey' #'apikey' # this is exactly the value 'apikey'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = api_key #'apikey' # this is exactly the value 'apikey'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
 
 # EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-# SENDGRID_API_KEY = api_key #os.getenv('SENDGRID_API_KEY')
-# SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+EMAIL_BACKEND = "sgbackend.SendGridBackend"
+SENDGRID_API_KEY = api_key
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False

@@ -29,6 +29,8 @@ class ListingSerializer(serializers.ModelSerializer):
             'images',
             'image',
             'date_added',
+            'Latitude_of_city',
+            'Longitude_of_city'
             ]
 
 
@@ -61,5 +63,7 @@ class ListingDetailSerializer(serializers.ModelSerializer):
             'images',
             'image',
             'date_added',
+            'Latitude_of_city',
+            'Longitude_of_city'
             ]
         lookup_field = 'slug'

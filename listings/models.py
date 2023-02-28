@@ -46,6 +46,15 @@ class Listing(models.Model):
     image_4       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
     image_5       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
     date_added    = models.DateTimeField(auto_now_add=True)
+    Latitude_of_city = models.DecimalField(
+                         max_digits = 5,
+                         decimal_places = 2,
+                         default = 9.005401)
+    Longitude_of_city = models.DecimalField(
+                         max_digits = 5,
+                         decimal_places = 2,
+                         default = 38.763611)
+    
 
     class Meta:
         verbose_name_plural="Listings"

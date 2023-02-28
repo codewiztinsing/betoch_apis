@@ -8,9 +8,11 @@ from .serializers import SubscriberSerializer
 class Subscribe(APIView):
 	def post(self,request,format = None):
 		email = self.request.data.get('email')
-		Subscriber.objects.create(email = email)
-
-		return Response({'message':"Hello world"})
+		subscriber = Subscriber.objects.create(email = email)
+		data  = SubscriberSerializer(subscriber,many = True)
+		if data.is_valid():
+			return Response(data.data)
+		return Response({'message':"subscriber is not created"})
 
 	def get(self,request,format = None):
 		subscriber_list = Subscriber.objects.all()

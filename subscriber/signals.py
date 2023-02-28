@@ -16,17 +16,10 @@ def create_profile(sender, instance, created, **kwargs):
         subs = Subscriber.objects.filter(city__contains = city)
         emails = []
         for sub in subs:
-            emails.append(sub)
-        send_mail(
-            'Hello dear,the new house is posted in your city',
-            f"house title {instance.title}\
-            house price {instance.price} \
-            house location {city} ",
-            'tinsingjobs2k@gmail.com',
-            emails,
-            fail_silently=False,
-        )
-        print("after mail send")
+            if sub not in emails:
+                emails.append(sub.email)
+        send_mail('new house is posted near to you',f"house with ",'solomonboloshe11x@gmail.com',['aleludago@gmail.com'],fail_silently=False)
+
 
 
   
