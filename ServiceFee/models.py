@@ -5,8 +5,8 @@ from realtors.models import Realtor
 # Create your models here.
 
 class ServiceFee(models.Model):
-	listing = models.ForeignKey(Listing,on_delete = models.CASCADE)
-	realtor = models.ForeignKey(Realtor,on_delete = models.CASCADE)
+	listing = models.ForeignKey(Listing,on_delete = models.CASCADE,null = True)
+	realtor = models.ForeignKey(Realtor,on_delete = models.CASCADE,null = True)
 	fee   = models.IntegerField(default = 100)
 
 	def __str__(self):

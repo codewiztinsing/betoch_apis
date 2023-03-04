@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/v1/orders/', include('order.urls')),
     path('api/v1/pay/', include('payments.urls')),
     path('api/v1/favs/', include('favorites.urls')),
+    path('api/v1/servicefee/', include('ServiceFee.urls')),
     path('landing/', LandingView,name = "landing"),
     # path('api/v1/profiles/', include('profiles.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

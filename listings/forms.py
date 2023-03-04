@@ -17,8 +17,6 @@ class ListingForm(forms.ModelForm):
 			'bath_rooms',
 			'sqrt',
 			'home_type',
-			'Latitude_of_city',
-			'Longitude_of_city',
 			'image',
 			'image_1',
 			'image_2',

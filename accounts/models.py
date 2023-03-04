@@ -19,14 +19,16 @@ class UserAccountManager(BaseUserManager):
 		user.save()
 		return user
 
+
+
+
 class UserAccount(AbstractBaseUser,PermissionsMixin):
 	email = models.EmailField(max_length=255,unique=True)
 	name  = models.CharField(max_length=255)
 	is_active = models.BooleanField(default = True)
 	is_staff  = models.BooleanField(default = False)
 	is_realtor = models.CharField(max_length = 10,null = True)
-	# is_anonymous = models.BooleanField(default = True)
-	# is_authenticated = models.BooleanField(default = False)
+	balance   =  models.DecimalField(max_digits=5, decimal_places=2,default = 100.00)
 	objects = UserAccountManager()
 
 	USERNAME_FIELD = 'email'

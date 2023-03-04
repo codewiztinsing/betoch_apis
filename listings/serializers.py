@@ -10,6 +10,8 @@ class ListingSerializer(serializers.ModelSerializer):
             'id',
             'realtor',
             'get_realtor_name',
+            'get_realtor_email',
+            'get_realtor_phone',
             'title',
             'city',
             'slug',
@@ -28,9 +30,9 @@ class ListingSerializer(serializers.ModelSerializer):
             'get_image',
             'images',
             'image',
-            'date_added',
-            'Latitude_of_city',
-            'Longitude_of_city'
+            'date_added'
+            # 'Latitude_of_city',
+            # 'Longitude_of_city'
             ]
 
 
@@ -44,6 +46,8 @@ class ListingDetailSerializer(serializers.ModelSerializer):
             'id',
             'title',
             'get_realtor_name',
+            'get_realtor_email',
+            'get_realtor_phone',
             'city',
             'slug',
             'address',
@@ -62,8 +66,8 @@ class ListingDetailSerializer(serializers.ModelSerializer):
             'get_image',
             'images',
             'image',
-            'date_added',
-            'Latitude_of_city',
-            'Longitude_of_city'
+            'date_added'
+            # 'Latitude_of_city',
+            # 'Longitude_of_city'
             ]
         lookup_field = 'slug'

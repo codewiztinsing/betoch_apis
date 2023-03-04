@@ -254,7 +254,9 @@ api_key = "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
 # EMAIL_PORT = 587
 # EMAIL_USE_TLS = True
 
+
+
 # EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-EMAIL_BACKEND = "sgbackend.SendGridBackend"
-SENDGRID_API_KEY = api_key
-SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+# EMAIL_BACKEND = "sgbackend.SendGridBackend"
+# SENDGRID_API_KEY = api_key
+# SENDGRID_SANDBOX_MODE_IN_DEBUG = False

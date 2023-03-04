@@ -29,12 +29,12 @@ class Listing(models.Model):
     city          = models.CharField(max_length=255)
     state         = models.CharField(max_length=255)
     house_number  = models.CharField(max_length=255)
-    price         = models.DecimalField(max_digits=6, decimal_places=2,default=144)
+    price         = models.DecimalField(max_digits=10, decimal_places=2,default=144)
     published     = models.BooleanField(default = False)
     sale_type     = models.CharField(max_length = 10,choices = SaleType.choices,default = SaleType.FOR_SALE)
     bed_rooms     = models.IntegerField()
-    bath_rooms    = models.IntegerField(default = 0)
-    sqrt          = models.DecimalField(max_digits = 4,decimal_places = 2,default = 10.00)
+    bath_rooms    = models.IntegerField(default = 2)
+    sqrt          = models.DecimalField(max_digits = 10,decimal_places = 2,default = 10.00)
     home_type     = models.CharField(max_length = 10,choices = HomeType.choices,default = HomeType.CONDO)
     # description   = RichTextField(null = True)
     description   = models.TextField(null = True)
@@ -46,14 +46,16 @@ class Listing(models.Model):
     image_4       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
     image_5       = models.ImageField(upload_to='uploads/', default = None, blank=True, null=True)
     date_added    = models.DateTimeField(auto_now_add=True)
-    Latitude_of_city = models.DecimalField(
-                         max_digits = 5,
-                         decimal_places = 2,
-                         default = 9.005401)
-    Longitude_of_city = models.DecimalField(
-                         max_digits = 5,
-                         decimal_places = 2,
-                         default = 38.763611)
+    # Latitude_of_city = models.DecimalField(
+    #                      max_digits = 10,
+    #                      decimal_places = 2,
+    #                      default = 9.005401,
+    #                      null = True)
+    # Longitude_of_city = models.DecimalField(
+    #                      max_digits = 10,
+    #                      decimal_places = 2,
+    #                      default = 38.763611,
+    #                      null = True)
     
 
     class Meta:
@@ -71,6 +73,18 @@ class Listing(models.Model):
     @property
     def get_realtor_name(self):
         return self.realtor.name
+
+    @property
+    def get_realtor_email(self):
+        return self.realtor.email
+
+    @property
+    def get_realtor_phone(self):
+        return self.realtor.phone
+
+    # @property
+    # def get_realtor_socialmedia(self):
+    #     return self.realtor.
 
     @property
     def images(self):

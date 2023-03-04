@@ -13,7 +13,7 @@ class Order(models.Model):
          related_name='realtor_orders', null = True,on_delete=models.CASCADE)
     listing     = models.ForeignKey('listings.Listing',
         related_name= "ordered_listing", 
-        unique = True,
+        # unique = True,
         null = True,
         on_delete = models.CASCADE,
         )

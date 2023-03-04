@@ -18,7 +18,7 @@ class FavoriteListView(APIView):
         queryset = Favorite.objects.filter(realtor_email = self.request.data['email'])
         if queryset.exists():
             realtor = Realtor.objects.get(email = self.request.data['email'])
-            data = Listing.objects.filter(realtor = realtor)
+            data = Listing.objects.filter(published = True ).filter(realtor = realtor)
             seriaized_data = ListingSerializer(data,many = True)
         return Response(seriaized_data.data)
     

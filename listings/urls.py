@@ -10,6 +10,7 @@ from .views import (
 	AddandRetrieveFavoriteView,
 	MYListing,
 	FullTextSearch,
+	MyListingsView,
 	mylistings
 
 	)
@@ -28,6 +29,7 @@ urlpatterns = [
 	path('user-add/',useraddlisting,name = 'user-add'),
 	# path('mylistings/',MYListing.as_view(),name = 'mylistings'),
 	path('mylistings/',mylistings,name = 'mylisting'),
+	path('realtorlisting/',MyListingsView.as_view(),name = 'mylistingrealtorview'),
 	path('<slug>/',ListingView.as_view(),name = 'listing'),
 	
 ]

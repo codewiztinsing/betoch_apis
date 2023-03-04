@@ -21,8 +21,19 @@ from django.contrib.postgres.search import (
 class ListingsView(ListAPIView):
 	queryset = Listing.objects.filter(published = True)
 	serializer_class = ListingSerializer
-	# permission_classes = (permissions.AllowAny)
 	pagination_class = None
+
+
+
+class MyListingsView(APIView):
+	def get(self,request,format = None):
+		realtor_email = self.request.GET['email']
+		queryset = Listing.objects.filter(realtor__email=realtor_email)
+		print(queryset)
+		serialized_data = ListingSerializer(queryset,many = True)
+		return Response(serialized_data.data)
+
+
 
 
 class ListingViewSet(viewsets.ModelViewSet):
@@ -100,7 +111,9 @@ class FullTextSearch(APIView):
 		search_vector = SearchVector('title',weight="A") \
 								+ SearchVector('home_type',weight="B") \
 								+ SearchVector('sale_type',weight="B")\
-								+ SearchVector('price',weight="A")
+								+ SearchVector('price',weight="A")\
+								+ SearchVector('bed_rooms',weight="A")\
+								+ SearchVector('bath_rooms',weight="A")
 
 	
 
@@ -128,6 +141,7 @@ class RelatedSearchView(APIView):
 		home_type = data['home_type'] 
 		city = data['city']  
 		price = data['price']
+		
 		q1 = Listing.objects.filter(home_type__contains = home_type)
 		q2 = Listing.objects.filter(city__contains = city)
 		q13 = Listing.objects.filter(price__lt = price)
@@ -177,6 +191,7 @@ def useraddlisting(request):
 			
 
 	return render(request,'listing/index.html',{'form':form})
+
 
 
 
