@@ -10,6 +10,7 @@ class Realtor(models.Model):
 	phone       = models.CharField(max_length = 10)
 	top_seller  = models.BooleanField(default = False)
 	balance     = models.FloatField(default = 100.00)
+	Account_number = models.IntegerField(null = True)
 	created_at  = models.DateTimeField(default = datetime.now)
 
 
